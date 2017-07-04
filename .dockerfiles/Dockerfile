@@ -10,6 +10,14 @@ RUN         /root/.pyenv/versions/deploy_eb_docker/bin/pip install -r .requireme
 
 # supervisor파일 복사
 COPY        .config/supervisor/uwsgi.conf /etc/supervisor/conf.d/
+COPY        .config/supervisor/nginx.conf /etc/supervisor/conf.d/
+
+
+# nginx 파일 복사
+COPY        .config/nginx/nginx.conf /etc/nginx/nginx.conf
+COPY        .config/nginx/nginx-app.conf /etc/nginx/sites-available/nginx-app.conf
+RUN         rm -rf /etc/nginx/sites-enabled/default
+RUN         ln -sf /etc/nginx/sites-available/nginx-app.conf /etc/nginx/sites-enabled/nginx-app.conf
 
 CMD         supervisord -n
 EXPOSE      80 8000
