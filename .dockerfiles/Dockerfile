@@ -8,6 +8,10 @@ WORKDIR     /srv/deploy_eb_docker
 # requirements설치
 RUN         /root/.pyenv/versions/deploy_eb_docker/bin/pip install -r .requirements/debug.txt
 
+# supervisor파일 복사
+COPY        .config/supervisor/uwsgi.conf /etc/supervisor/conf.d/
+
+CMD         supervisord -n
 EXPOSE      80 8000
 
 # 실행시
