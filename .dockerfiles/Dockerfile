@@ -22,7 +22,7 @@ RUN         ln -sf /etc/nginx/sites-available/nginx-app.conf /etc/nginx/sites-en
 # collectstatic 실행
 RUN         /root/.pyenv/versions/deploy_eb_docker/bin/python /srv/deploy_eb_docker/django_app/manage.py collectstatic --settings=config.settings.deploy --noinput
 
-CMD         supervisord -n
+#CMD         supervisord -n
 EXPOSE      80 8000
 
 # 실행시
