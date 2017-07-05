@@ -19,6 +19,8 @@ COPY        .config/nginx/nginx-app.conf /etc/nginx/sites-available/nginx-app.co
 RUN         rm -rf /etc/nginx/sites-enabled/default
 RUN         ln -sf /etc/nginx/sites-available/nginx-app.conf /etc/nginx/sites-enabled/nginx-app.conf
 
+
+
 CMD         supervisord -n
 EXPOSE      80 8000
 
