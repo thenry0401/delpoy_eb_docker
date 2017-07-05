@@ -6,7 +6,7 @@ COPY        . /srv/deploy_eb_docker
 # cd /srv/deploy_eb_docker와 같은 효과
 WORKDIR     /srv/deploy_eb_docker
 # requirements설치
-RUN         /root/.pyenv/versions/deploy_eb_docker/bin/pip install -r .requirements/debug.txt
+RUN         /root/.pyenv/versions/deploy_eb_docker/bin/pip install -r .requirements/deploy.txt
 
 # supervisor파일 복사
 COPY        .config/supervisor/uwsgi.conf /etc/supervisor/conf.d/
@@ -19,7 +19,8 @@ COPY        .config/nginx/nginx-app.conf /etc/nginx/sites-available/nginx-app.co
 RUN         rm -rf /etc/nginx/sites-enabled/default
 RUN         ln -sf /etc/nginx/sites-available/nginx-app.conf /etc/nginx/sites-enabled/nginx-app.conf
 
-
+# collectstatic 실행
+RUN         /root/.pyenv/versions/deploy_eb_docker/bin/python /srv/deploy_eb_docker/django_app/manage.py collectstatic --settings=config.settings.deploy --noinput
 
 CMD         supervisord -n
 EXPOSE      80 8000
